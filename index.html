@@ -12,31 +12,6 @@
 
 
 <body>
-<?php
-// Aqui você pode incluir configurações iniciais ou conexão com o banco de dados
-$api_url = "https://api.sualoja.com/produtos/"; // URL de exemplo da API
-$produto_id = isset($_GET['id']) ? $_GET['id'] : 1; // ID do produto vindo da URL
-
-// Função para buscar dados da API
-function buscarProduto($url, $id) {
-    // Na implementação real, você usaria curl ou file_get_contents para buscar os dados
-    //  simular os dados retornados
-    $produto = [
-        'id' => $id,
-        'nome' => 'Vestido Primavera',
-        'preco' => 219.90,
-        'descricao' => 'Vestido confeccionado em linho premium com detalhes artesanais. Design exclusivo que une elegância e conforto, perfeito para ocasiões especiais ou para elevar seu visual do dia a dia.',
-        'imagem' => 'casaci.png',
-        'tamanhos_disponiveis' => ['PP', 'P', 'M', 'G', 'GG']
-    ];
-
-    return $produto;
-}
-
-// Buscar produto da API
-$produto = buscarProduto($api_url, $produto_id);
-?>
-
 
 <header class="header">
     <nav class="nav">
