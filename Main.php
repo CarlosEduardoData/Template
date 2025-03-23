@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moda Elegante - Sua Loja de Roupas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+
+<body>
+<?php
+// Aqui você pode incluir configurações iniciais ou conexão com o banco de dados
+$api_url = "https://api.sualoja.com/produtos/"; // URL de exemplo da API
+$produto_id = isset($_GET['id']) ? $_GET['id'] : 1; // ID do produto vindo da URL
+
+// Função para buscar dados da API
+function buscarProduto($url, $id) {
+    // Na implementação real, você usaria curl ou file_get_contents para buscar os dados
+    //  simular os dados retornados
+    $produto = [
+        'id' => $id,
+        'nome' => 'Vestido Primavera',
+        'preco' => 219.90,
+        'descricao' => 'Vestido confeccionado em linho premium com detalhes artesanais. Design exclusivo que une elegância e conforto, perfeito para ocasiões especiais ou para elevar seu visual do dia a dia.',
+        'imagem' => 'casaci.png',
+        'tamanhos_disponiveis' => ['PP', 'P', 'M', 'G', 'GG']
+    ];
+
+    return $produto;
+}
+
+// Buscar produto da API
+$produto = buscarProduto($api_url, $produto_id);
+?>
+
+
+<header class="header">
+    <nav class="nav">
+        <a href="#" class="logo">Moda Elegante</a>
+        <div class="nav-links">
+            <a href="#">Início</a>
+            <a href="#">Coleção</a>
+            <a href="#">Sobre</a>
+            <a href="#">Contato</a>
+        </div>
+    </nav>
+
+    <div class="header-content">
+
+        <h1>Elegância Atemporal</h1>
+        <p>Descubra peças que combinam sofisticação, conforto e personalidade. Nossa marca traz o melhor da moda contemporânea com designs clássicos e materiais de alta qualidade.</p>
+    </div>
+</header>
+
+
+<section class="apresentacao">
+    <h2>Nossa Essência</h2>
+    <p>Fundada em 2015, a Moda Elegante nasceu da paixão por criar peças que transmitem elegância natural. Utilizamos materiais sustentáveis e processos de produção éticos para criar roupas duradouras e de alta qualidade. Cada coleção é cuidadosamente desenhada para trazer sofisticação e versatilidade ao seu guarda-roupa, respeitando a expressão individual de cada pessoa.</p>
+</section>
+
+
+<section class="produto">
+    <div class="produto-img">
+        <img class="produto-imagem" src="casaco.png" alt="Imagem do Produto">
+    </div>
+
+    <div class="produto-info">
+        <h3><?php echo $produto['nome']; ?></h3>
+        <div class="preco">R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></div>
+
+        <p class="descricao"><?php echo $produto['descricao']; ?></p>
+
+        <div class="tamanhos">
+            <?php foreach($produto['tamanhos_disponiveis'] as $tamanho): ?>
+                <div class="tamanho" onclick="selecionarTamanho(this)"><?php echo $tamanho; ?></div>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="calcular-frete">
+            <input type="text" placeholder="Digite seu CEP" id="cep" maxlength="9">
+            <button onclick="calcularFrete()">Calcular Frete</button>
+            <div id="resultado-frete"></div>
+        </div>
+
+        <button class="btn-comprar" onclick="adicionarAoCarrinho()">Adicionar ao Carrinho</button>
+    </div>
+</section>
+
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>Sobre Nós</h4>
+            <p>Moda Elegante é uma marca dedicada à elegância atemporal, comprometida com qualidade, estilo e sustentabilidade.</p>
+        </div>
+
+        <div class="footer-section">
+            <h4>Atendimento</h4>
+            <a href="mailto:contato@modaelegante.com">contato@modaelegante.com</a>
+            <a href="tel:+551112345678">(11) 1234-5678</a>
+            <p>Seg - Sex: 9h às 18h</p>
+        </div>
+
+        <div class="footer-section">
+            <h4>Redes Sociais</h4>
+            <a href="#">Instagram</a>
+            <a href="#">Facebook</a>
+            <a href="#">Pinterest</a>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2025 Moda Elegante - Todos os direitos reservados</p>
+    </div>
+</footer>
+
+<script>
+    function selecionarTamanho(elemento) {
+        // Remove a classe 'selecionado' de todos os tamanhos
+        document.querySelectorAll('.tamanho').forEach(item => {
+            item.classList.remove('selecionado');
+        });
+
+        // Adiciona a classe 'selecionado' ao tamanho clicado
+        elemento.classList.add('selecionado');
+    }
+
+    // Função para calcular frete (simulação)
+    function calcularFrete() {
+        const cep = document.getElementById('cep').value;
+
+        if(cep.length < 8) {
+            alert('Por favor, digite um CEP válido');
+            return;
+        }
+
+        // Simulação - Na implementação real você faria uma requisição AJAX para sua API
+        setTimeout(() => {
+            const valorFrete = Math.floor(Math.random() * 20) + 10;
+            document.getElementById('resultado-frete').innerHTML = `<p style="margin-top: 10px; color: var(--verde-escuro);">Frete para ${cep}: <strong>R$ ${valorFrete},00</strong> - Entrega em até 7 dias úteis</p>`;
+        }, 1000);
+
+
+    }
+
+    // Função para adicionar ao carrinho
+    function adicionarAoCarrinho() {
+        const tamanhoSelecionado = document.querySelector('.tamanho.selecionado');
+
+        if(!tamanhoSelecionado) {
+            alert('Por favor, selecione um tamanho');
+            return;
+
+        }
+
+
+        alert('Produto adicionado ao carrinho! \nTamanho + ${tamanhoSelecionado.textContent}');
+
+
+    }
+
+    // Formatar entrada de CEP
+    document.getElementById('cep').addEventListener('input', function (e) {
+        let cep = e.target.value.replace(/\D/g, '');
+
+        if (cep.length > 5) {
+            cep = cep.substring(0, 5) + '-' + cep.substring(5);
+        }
+
+        e.target.value = cep;
+    });
+</script>
+</body>
+</html>
