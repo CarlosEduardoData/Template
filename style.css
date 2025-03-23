@@ -37,7 +37,7 @@ h1, h2, h3, h4 {
     color: var(--texto-claro);
     overflow: hidden;
     margin: 0px;
-    content: 'header2.png';
+    content: <img class="produto-imagem" src="header2.png" alt="header">;
 }
 
 .header::before {
